@@ -37,13 +37,14 @@ export const signup = async (req, res) => {
     });
 
     if (newUser) {
-      generateToken(newUser._id, res);
-      await newUser.save();
+      const savedUser = await newUser.save();
+      generateToken(savedUser._id, res);
+
       return res.status(201).json({
-        _id: newUser._id,
-        name: newUser.name,
-        email: newUser.email,
-        profile: newUser.profile,
+        _id: savedUser._id,
+        name: savedUser.name,
+        email: savedUser.email,
+        profile: savedUser.profile,
       });
 
       //email confirmation user
